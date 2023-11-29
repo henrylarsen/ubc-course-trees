@@ -1,0 +1,27 @@
+{
+  "tree": [
+    {
+      "id": "CPSC 210",
+      "children": {
+        "AND": [
+          "CPSC 110",
+          "CPSC 107"
+        ]
+      }
+    },
+    {
+      "id": "CPSC 110",
+      "children": {}
+    },
+    {
+      "id": "CPSC 107",
+      "children": {
+        "DIRECT": "CPSC 103"
+      }
+    },
+    {
+      "id": "CPSC 103",
+      "children": {}
+    }
+  ]
+}
