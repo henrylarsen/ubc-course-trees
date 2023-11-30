@@ -5,23 +5,23 @@ import chai, {expect} from "chai";
 
 chai.use(chaiAsPromised);
 
-describe("TreeController", function () {
-   let treeCont: CourseManager;
+describe("CourseManager", function () {
+   let courseManager: CourseManager;
 
    before(function () {
 
    });
 
 
-   describe("dNode", function () {
+   describe("initialize",  function () {
 
        beforeEach(function ()  {
-           treeCont = new CourseManager();
+           courseManager = new CourseManager();
        });
 
        it ("should accept data", async function () {
-           await treeCont.initialize();
-           return expect(treeCont.courses).to.equal("");
+           const result = await courseManager.initialize();
+           return expect(courseManager.getCourses()).to.deep.equal("");
        })
 
    });

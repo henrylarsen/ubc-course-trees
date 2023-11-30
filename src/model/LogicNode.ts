@@ -1,5 +1,5 @@
-import {CNode} from "./CNode";
+import Course from "./Course";
 
-export default class LogicNode extends CNode{
+export default class LogicNode extends Course{
 
 }
