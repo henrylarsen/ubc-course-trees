@@ -1,5 +1,4 @@
-import {ICourseManager, AbstractNode} from "./ICourseManager";
-import {CNode} from "../model/CNode";
+import {CourseDependencyObject, ICourseManager} from "./ICourseManager";
 import * as fs from "fs-extra";
 import Course from "../model/Course";
 
@@ -16,31 +15,42 @@ export default class CourseManager implements ICourseManager {
     }
 
     public async initialize() {
-        try {
-            const jsonData = fs.readJSON("./data/data.json").then((result) => {
-                // console.log(result);
-                this.processTree(result.tree);
-            });
 
-        } catch (e) {
-            console.error("error: ", e);
+            // fs.readJSON("./data/data.json").then((result) => {
+            //     // console.log(result);
+            //     this.processTree(result.tree);
+            // }).catch((error) => {
+            //     console.error("Error: ", error);
+            //     throw new Error("Cannot process data");
+            // });
+        try {
+            const result = await fs.readJSON("./data/data.json");
+            this.processTree(result.tree);
+        } catch (error) {
+            console.error("error: ", error);
             throw new Error("Cannot process data");
         }
     }
 
+    public getCourses() {
+        console.log("CHECK: ", this.courses);
+        return this.courses;
+    }
+
     private processTree(tree: any) {
         for (const node of tree) {
-            console.log(node);
+            // console.log(node);
             this.addNode(node.id, node.children);
         }
     }
 
-    private addNode(id: string, children: string[]) {
+    private addNode(id: string, children: CourseDependencyObject) {
         if (this.courses[id]) {
             throw new Error("duplicate course");
         } else {
             this.courses[id] = new Course(id, children);
         }
+        // console.log(this.courses)
     }
 
 }

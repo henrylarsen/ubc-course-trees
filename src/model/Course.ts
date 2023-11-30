@@ -1,13 +1,16 @@
-import {CNode} from "./CNode";
+import {CourseDependencyObject, ICourse} from "../controller/ICourseManager";
 
-export default class Course extends CNode {
-    // public name: string;
-    // public preRequisites: Course[];
-    // public children: CNode[];
-    // public coRequisites: Course[];
+export default class Course implements ICourse {
+    public id: string;
+    public children: CourseDependencyObject;
 
-    constructor(id: string, children: string[]) {
-        super(id, children);
+    constructor(id: string, children: CourseDependencyObject ) {
+        // console.log(id, children);
+        this.id = id;
+        this.children = children;
     }
 
+     public setChild(children: CourseDependencyObject): void {
+        this.children = children;
+    }
 }
