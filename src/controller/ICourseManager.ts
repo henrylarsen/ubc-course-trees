@@ -1,6 +1,6 @@
 import Course from "../model/Course";
 
-type CourseDependency = string | CourseDependencyObject;
+type CourseDependency = CourseDependencyObject;
 
 export interface CourseDependencyObject {
     OR?: CourseDependency[];
@@ -19,4 +19,5 @@ export interface ICourse {
 export interface ICourseManager {
     initialize(id: string, content: string): void;
     getCourse(id: string): Course;
+    getChildren(root: CourseDependencyObject): string[];
 }

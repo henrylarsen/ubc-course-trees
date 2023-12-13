@@ -1,0 +1,96 @@
+{
+  "tree": [
+    {
+      "id": "CPSC 310",
+      "children": {
+        "AND": [
+          {
+            "DIRECT": "CPSC 213"
+          },
+          {
+            "DIRECT": "CPSC 221"
+          }
+        ]
+      }
+    },
+    {
+      "id": "CPSC 213",
+      "children": {
+        "AND": [
+          {
+            "DIRECT": "CPSC 121"
+          },
+          {
+            "DIRECT": "CPSC 210"
+          }
+        ]
+      }
+    },
+    {
+      "id": "CPSC 221",
+      "children": {
+        "AND": [
+          {
+            "OR": [
+              {
+                "DIRECT": "CPSC 210"
+              },
+              {
+                "DIRECT": "CPEN 221"
+              }
+            ]
+          },
+          {
+            "OR": [
+              {
+                "DIRECT": "CPSC 121"
+              },
+              {
+                "DIRECT": "MATH 220"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "CPSC 210",
+      "children": {
+        "AND": [
+          {
+            "DIRECT": "CPSC 110"
+          },
+          {
+            "DIRECT": "CPSC 107"
+          }
+        ]
+      }
+    },
+    {
+      "id": "CPSC 110",
+      "children": {}
+    },
+    {
+      "id": "CPSC 107",
+      "children": {
+        "DIRECT": "CPSC 103"
+      }
+    },
+    {
+      "id": "CPSC 103",
+      "children": {}
+    },
+    {
+      "id": "MATH 220",
+      "children": {}
+    },
+    {
+      "id": "CPEN 221",
+      "children": {}
+    },
+    {
+      "id": "CPSC 121",
+      "children": {}
+    }
+  ]
+}

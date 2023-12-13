@@ -24,6 +24,12 @@ describe("CourseManager", function () {
            return expect(courseManager.getCourses()).to.deep.equal("");
        })
 
+       it ("display the tree", async function () {
+           await courseManager.initialize();
+           courseManager.displayTree('CPSC 310');
+           return expect(1).to.deep.equal(1);
+       })
+
    });
 
 });
