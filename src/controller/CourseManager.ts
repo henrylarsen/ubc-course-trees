@@ -1,20 +1,14 @@
 import {CourseDependencyObject, ICourseManager} from "./ICourseManager";
 import * as fs from "fs-extra";
 import Course from "../model/Course";
-// import {DirectedAcyclicGraph} from "typescript-graph/dist/types";
-import {DirectedAcyclicGraph} from "typescript-graph";
 import {consoleDisplay} from "../util/ConsoleDisplay";
-// import {Graph} from "typescript-graph/dist/types";
-// / <reference path="./node_modules/typescript-graph/dist/types/graph.d.ts" />
-// import {Graph} from "typescript-graph";
+import {cursorTo} from "readline";
 
 
-// type NodeType = {id: string, children: any[]};
 
 export default class CourseManager implements ICourseManager {
     public courses: {[id: string]: Course} = {};
     private consoleDisplay;
-    // private graph =  new DirectedAcyclicGraph<NodeType>((n: NodeType) => n.id);
 
     constructor() {
         this.consoleDisplay = new consoleDisplay(this);
@@ -64,6 +58,31 @@ export default class CourseManager implements ICourseManager {
             return [];
         }
     }
+
+    public getDependencies(id: string) {
+        let subDict: {[id: string]: Course} = {};
+        const course = this.getCourse(id);
+        const queue = this.getChildren(course.children)
+        let children = this.getChildren(course.children);
+        children.push(id);
+        while (queue.length > 0) {
+            const currentID = queue.shift();
+            if (currentID != undefined) {
+                children.push(currentID);
+                const currentCourse = this.getCourse(currentID);
+                queue.push(...this.getChildren(currentCourse.children));
+            }
+        }
+
+        const setChildren = [...new Set(children)];
+
+        for (const child of setChildren) {
+            subDict[child] = this.getCourse(child);
+        }
+        console.log(subDict);
+        return subDict;
+
+    }
     public getCourse(id: string): Course {
         if (this.courses[id]) {
             return this.courses[id];
@@ -82,7 +101,7 @@ export default class CourseManager implements ICourseManager {
             console.error("error: ", error);
             throw new Error("Cannot process data");
         }
-        console.log(this.getCourses());
+        // console.log(this.getCourses());
     }
 
     public getCourses() {
@@ -92,7 +111,6 @@ export default class CourseManager implements ICourseManager {
 
     private processTree(tree: any) {
         for (const node of tree) {
-            // console.log(node);
             this.addNode(node.id, node.children);
         }
     }
@@ -103,32 +121,6 @@ export default class CourseManager implements ICourseManager {
         } else {
             this.courses[id] = new Course(id, children);
         }
-        // console.log(this.courses)
     }
-
-    // private initializeGraph() {
-    //     // console.log("courses: ", this.courses);
-    //     Object.keys(this.courses).forEach((key) => {
-    //         // let children = this.getChildren(this.courses[key].children);
-    //         // console.log("key, ", key)
-    //         // this.graph.insert({id: key, children: []});
-    //     });
-    //
-    //     // console.log("PRINT GRAPH", this.graph.getNodes());
-    //
-    //     const listNodes = this.graph.getNodes();
-    //     for (const n of listNodes) {
-    //         let children = this.getChildren(this.courses[n.id].children);
-    //         this.graph.upsert({id: n.id, children: children})
-    //         for (let child of children) {
-    //             this.graph.addEdge(n.id, child);
-    //         }
-    //     }
-    //     const printNodes = this.graph.getNodes();
-    //     for (let node of printNodes) {
-    //         // console.log(node.id, node.children);
-    //     }
-
-    // }
 }
 
